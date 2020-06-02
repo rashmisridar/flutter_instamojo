@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils.dart';
+
 class Loader extends StatefulWidget {
   @override
   _LoaderState createState() => _LoaderState();
@@ -32,7 +34,12 @@ class _LoaderState extends State<Loader> with TickerProviderStateMixin {
         height: radius,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.amber.withOpacity(1 - _controller.value),
+          color:
+              stylingDetails.loaderColor.withOpacity(1 - _controller.value) ??
+                  Theme.of(context)
+                      .primaryColor
+                      .withOpacity(1 - _controller.value) ??
+                  Colors.amber.withOpacity(1 - _controller.value),
         ),
       );
     }

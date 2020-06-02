@@ -8,6 +8,7 @@ import 'package:flutter_instamojo/models/payment_option_model.dart';
 import 'package:flutter_instamojo/repositories/instamojo_repository.dart';
 import 'package:flutter_instamojo/widgets/trust_logo.dart';
 
+import '../../utils.dart';
 import '../browser.dart';
 import '../loader.dart';
 import 'app_bar_search.dart';
@@ -90,14 +91,13 @@ class _NetBankingState extends State<NetBanking> {
                           width: double.maxFinite,
                           decoration: BoxDecoration(
                               border: Border(
-                                  bottom:
-                                      BorderSide(color: Color(0XFFCCD1D9)))),
+                                  bottom: BorderSide(
+                                      color: stylingDetails
+                                          .listItemStyle.borderColor))),
                           margin: EdgeInsets.symmetric(horizontal: 16),
                           padding: EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
-                            state.banks[index].name,
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                          ),
+                          child: Text(state.banks[index].name,
+                              style: stylingDetails.listItemStyle.textStyle),
                         ),
                         onTap: () {
                           Navigator.push(
@@ -110,11 +110,6 @@ class _NetBankingState extends State<NetBanking> {
                                         postData: "bank_code=" +
                                             state.banks[index].id,
                                       )));
-                          // InstamojoFlutter.openJuspay(bundle: {
-                          //   "url": widget.netBankingOptions.submissionUrl,
-                          //   "postData":
-                          //       "bank_code=" + widget.netBankingOptions.choices[index].id
-                          // });
                         },
                       );
                     else

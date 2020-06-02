@@ -16,8 +16,8 @@ class CreateOrder extends InstamojoEvent {
 }
 
 class InitPayment extends InstamojoEvent {
-  final String orderId = "";
-  InitPayment({@required orderId});
+  final String orderId;
+  InitPayment({@required this.orderId});
   @override
   List<Object> get props => [];
 }

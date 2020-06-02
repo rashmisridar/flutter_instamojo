@@ -3,6 +3,7 @@ import 'package:flutter_instamojo/controllers/instamojo_controller.dart';
 import 'package:flutter_instamojo/models/payment_option_model.dart';
 import 'package:flutter_instamojo/repositories/instamojo_repository.dart';
 
+import '../../utils.dart';
 import '../browser.dart';
 import '../trust_logo.dart';
 
@@ -46,12 +47,14 @@ class _WalletState extends State<Wallet> {
             child: Container(
               width: double.maxFinite,
               decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Color(0XFFCCD1D9)))),
+                  border: Border(
+                      bottom: BorderSide(
+                          color: stylingDetails.listItemStyle.borderColor))),
               margin: EdgeInsets.symmetric(horizontal: 16),
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Text(
                 widget.walletOptions.choices[index].name,
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: stylingDetails.listItemStyle.textStyle,
               ),
             ),
             onTap: () {
@@ -65,11 +68,6 @@ class _WalletState extends State<Wallet> {
                                 widget.walletOptions.choices[index].id
                                     .toString(),
                           )));
-              // InstamojoFlutter.openJuspay(bundle: {
-              //   "url": widget.netBankingOptions.submissionUrl,
-              //   "postData":
-              //       "bank_code=" + widget.netBankingOptions.choices[index].id
-              // });
             },
           );
         else

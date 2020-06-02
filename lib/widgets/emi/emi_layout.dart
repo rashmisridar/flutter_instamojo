@@ -7,6 +7,8 @@ import 'package:flutter_instamojo/widgets/card/card_layout.dart';
 import 'package:flutter_instamojo/widgets/emi/emi_utils.dart';
 import 'package:flutter_instamojo/widgets/trust_logo.dart';
 
+import '../../utils.dart';
+
 class EmiLayout extends StatefulWidget {
   final String title;
   final Options emiOptions;
@@ -43,7 +45,10 @@ class _EmiLayoutState extends State<EmiLayout> {
     for (EmiList bank in bankList) {
       items.add(DropdownMenuItem(
         value: bank,
-        child: Text(bank.bankName),
+        child: Text(
+          bank.bankName,
+          style: stylingDetails.listItemStyle.textStyle,
+        ),
       ));
     }
     return items;
@@ -70,16 +75,20 @@ class _EmiLayoutState extends State<EmiLayout> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text("Select your credit card provider"),
+            Text(
+              "Select your credit card provider",
+              style: stylingDetails.listItemStyle.subTextStyle,
+            ),
             SizedBox(
               height: 8,
             ),
             Container(
                 width: double.maxFinite,
                 decoration: BoxDecoration(
-                    color: Colors.black87.withOpacity(0.1),
+                    color: stylingDetails.listItemStyle.borderColor
+                        .withOpacity(0.1),
                     border: Border.all(
-                      color: Color(0XFFCCD1D9),
+                      color: stylingDetails.listItemStyle.borderColor,
                     ),
                     borderRadius: BorderRadius.circular(2.0)),
                 padding: EdgeInsets.symmetric(horizontal: 8),
@@ -93,7 +102,8 @@ class _EmiLayoutState extends State<EmiLayout> {
             SizedBox(
               height: 16,
             ),
-            Text("Select an EMI option"),
+            Text("Select an EMI option",
+                style: stylingDetails.listItemStyle.textStyle),
             SizedBox(
               height: 8,
             ),
@@ -133,19 +143,21 @@ class _EmiLayoutState extends State<EmiLayout> {
                                   children: <Widget>[
                                 Text(
                                   emiAmountString,
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18),
+                                  style: stylingDetails.listItemStyle.textStyle,
                                 ),
                                 SizedBox(
                                   height: 4,
                                 ),
                                 Text(
                                   finalAmountString,
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 12),
+                                  style:
+                                      stylingDetails.listItemStyle.subTextStyle,
                                 )
                               ])),
-                          Icon(Icons.chevron_right)
+                          Icon(
+                            Icons.chevron_right,
+                            color: stylingDetails.listItemStyle.borderColor,
+                          )
                         ],
                       )),
                   onTap: () {

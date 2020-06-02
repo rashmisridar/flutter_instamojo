@@ -46,6 +46,14 @@ class _MyAppState extends State<MyApp> {
               barBackgroundColor: Colors.white,
               primaryColor: Colors.amber,
             )),
+        darkTheme: ThemeData(
+            appBarTheme: AppBarTheme(brightness: Brightness.dark),
+            primarySwatch: Colors.amber,
+            canvasColor: Colors.black,
+            brightness: Brightness.dark,
+            cupertinoOverrideTheme: CupertinoThemeData(
+              primaryColor: Colors.amber,
+            )),
         home: PaymentScreen());
   }
 }
@@ -90,7 +98,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       amount: _data.amount,
                       description: _data.description),
                   orderCreationUrl:
-                      "https://instamojo-dart-server.herokuapp.com/order",
+                      "https://sample-sdk-server.instamojo.com", // The sample server of instamojo to create order id.
                 )));
 
     setState(() {
@@ -242,7 +250,9 @@ class _PaymentScreenState extends State<PaymentScreen>
       height: radius,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.amber.withOpacity(1 - _controller.value),
+        color:
+            Theme.of(context).primaryColor.withOpacity(1 - _controller.value) ??
+                Colors.amber.withOpacity(1 - _controller.value),
       ),
     );
   }
@@ -292,6 +302,29 @@ class _InstamojoScreenState extends State<InstamojoScreen>
           apiCallType: ApiCallType.createOrder(
               createOrderBody: widget.body,
               orderCreationUrl: widget.orderCreationUrl),
+          stylingDetails: StylingDetails(
+              buttonStyle: ButtonStyle(
+                  buttonColor: Colors.amber,
+                  buttonTextStyle: TextStyle(
+                    color: Colors.black,
+                  )),
+              listItemStyle: ListItemStyle(
+                  borderColor: Colors.grey,
+                  textStyle: TextStyle(color: Colors.black, fontSize: 18),
+                  subTextStyle: TextStyle(color: Colors.grey, fontSize: 14)),
+              loaderColor: Colors.amber,
+              inputFieldTextStyle: InputFieldTextStyle(
+                  textStyle: TextStyle(color: Colors.black, fontSize: 18),
+                  hintTextStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                  labelTextStyle: TextStyle(color: Colors.grey, fontSize: 14)),
+              alertStyle: AlertStyle(
+                headingTextStyle: TextStyle(color: Colors.black, fontSize: 14),
+                messageTextStyle: TextStyle(color: Colors.black, fontSize: 12),
+                positiveButtonTextStyle:
+                    TextStyle(color: Colors.redAccent, fontSize: 10),
+                negativeButtonTextStyle:
+                    TextStyle(color: Colors.amber, fontSize: 10),
+              )),
         )));
   }
 

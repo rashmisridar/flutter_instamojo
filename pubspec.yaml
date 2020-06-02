@@ -1,6 +1,6 @@
 name: flutter_instamojo
-description: A new Flutter plugin for instamojo totally made in flutter. Have used the concepts the same as that of Instamojo's Android SDK available ("https://github.com/Instamojo/instamojo-android-sdk").
-version: 1.0.0
+description: A new Flutter plugin for instamojo made in flutter (every widgets and InappBrowser for flutter).
+version: 1.0.1+5
 homepage: https://github.com/kushalmahapatro/flutter_instamojo
 
 environment:
@@ -12,9 +12,9 @@ dependencies:
   flutter_bloc: ^4.0.0
   http: ^0.12.1
   meta: ^1.1.8
-  equatable: ^1.1.1
+  equatable: ^1.2.0
   webview_flutter: ^0.3.22+1
-  flutter_inappwebview: ^3.2.0
+  flutter_inappwebview: ^3.3.0
   decimal: ^0.3.5
 
 dev_dependencies:

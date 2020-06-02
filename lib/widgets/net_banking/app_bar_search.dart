@@ -116,6 +116,7 @@ class AppBarSearch {
       } else if (onSubmitted != null) onSubmitted("");
     }
     // Display the change in the app's title
+    // ignore: invalid_use_of_protected_member
     state.setState(() {});
   }
 

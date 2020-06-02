@@ -15,6 +15,7 @@ import 'package:flutter_instamojo/widgets/browser.dart';
 import 'package:flutter_instamojo/widgets/card/payment_card.dart';
 import 'package:flutter_instamojo/widgets/trust_logo.dart';
 
+import '../../utils.dart';
 import '../loader.dart';
 import 'input_formatters.dart';
 import 'my_strings.dart';
@@ -59,6 +60,8 @@ class _CardLayoutState extends State<CardLayout> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle hintStyle = stylingDetails.inputFieldTextStyle.hintTextStyle;
+    TextStyle labelStyle = stylingDetails.inputFieldTextStyle.labelTextStyle;
     return new Scaffold(
         key: _scaffoldKey,
         appBar: new AppBar(
@@ -76,14 +79,15 @@ class _CardLayoutState extends State<CardLayout> {
                   ),
                   TextFormField(
                     decoration: InputDecoration(
-                      border: const UnderlineInputBorder(),
-                      suffixIcon: const Icon(
-                        Icons.person,
-                        size: 30.0,
-                      ),
-                      hintText: 'What name is written on card?',
-                      labelText: 'Name on card',
-                    ),
+                        border: UnderlineInputBorder(),
+                        suffixIcon: const Icon(
+                          Icons.person,
+                          size: 30.0,
+                        ),
+                        hintText: 'What name is written on card?',
+                        labelText: 'Name on card',
+                        hintStyle: hintStyle,
+                        labelStyle: labelStyle),
                     onSaved: (String value) {
                       _paymentCard.name = value;
                     },
@@ -104,11 +108,12 @@ class _CardLayoutState extends State<CardLayout> {
                     ],
                     controller: numberController,
                     decoration: new InputDecoration(
-                      border: const UnderlineInputBorder(),
-                      suffixIcon: CardUtils.getCardIcon(_paymentCard.type),
-                      hintText: 'What number is written on card?',
-                      labelText: 'Number',
-                    ),
+                        border: const UnderlineInputBorder(),
+                        suffixIcon: CardUtils.getCardIcon(_paymentCard.type),
+                        hintText: 'What number is written on card?',
+                        labelText: 'Number',
+                        hintStyle: hintStyle,
+                        labelStyle: labelStyle),
                     enabled: !apiCalling,
                     onSaved: (String value) {
                       print('onSaved = $value');
@@ -129,10 +134,11 @@ class _CardLayoutState extends State<CardLayout> {
                           new LengthLimitingTextInputFormatter(4),
                         ],
                         decoration: new InputDecoration(
-                          border: const UnderlineInputBorder(),
-                          hintText: 'Number behind the card',
-                          labelText: 'CVV',
-                        ),
+                            border: const UnderlineInputBorder(),
+                            hintText: 'Number behind the card',
+                            labelText: 'CVV',
+                            hintStyle: hintStyle,
+                            labelStyle: labelStyle),
                         validator: CardUtils.validateCVV,
                         keyboardType: TextInputType.number,
                         enabled: !apiCalling,
@@ -152,10 +158,11 @@ class _CardLayoutState extends State<CardLayout> {
                         new CardMonthInputFormatter()
                       ],
                       decoration: new InputDecoration(
-                        border: const UnderlineInputBorder(),
-                        hintText: 'MM/YY',
-                        labelText: 'Expiry Date',
-                      ),
+                          border: const UnderlineInputBorder(),
+                          hintText: 'MM/YY',
+                          labelText: 'Expiry Date',
+                          hintStyle: hintStyle,
+                          labelStyle: labelStyle),
                       validator: CardUtils.validateDate,
                       keyboardType: TextInputType.number,
                       enabled: !apiCalling,
@@ -228,8 +235,9 @@ class _CardLayoutState extends State<CardLayout> {
         width: double.maxFinite,
         child: RaisedButton(
           onPressed: _validateInputs,
-          color: Colors.blueAccent,
-          splashColor: Colors.deepPurple,
+          color: stylingDetails.buttonStyle.buttonColor ??
+              Theme.of(context).primaryColor ??
+              Colors.blueAccent,
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
           ),
@@ -244,7 +252,7 @@ class _CardLayoutState extends State<CardLayout> {
                 }
                 return Text(
                   "Pay ₹ $amount".toUpperCase(),
-                  style: const TextStyle(fontSize: 17.0),
+                  style: stylingDetails.buttonStyle.buttonTextStyle,
                 );
               },
               listenWhen: (prev, current) {

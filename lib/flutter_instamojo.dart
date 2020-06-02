@@ -8,6 +8,7 @@ import 'package:flutter_instamojo/bloc/instamojo_state.dart';
 import 'package:flutter_instamojo/controllers/instamojo_controller.dart';
 import 'package:flutter_instamojo/models/models.dart';
 import 'package:flutter_instamojo/repositories/respositories.dart';
+import 'package:flutter_instamojo/utils.dart';
 import 'package:flutter_instamojo/widgets/loader.dart';
 import 'package:flutter_instamojo/widgets/payment_modes.dart';
 
@@ -19,12 +20,14 @@ class Instamojo extends StatefulWidget {
   final ApiCallType apiCallType;
   final InstamojoPaymentStatusListener listener;
   final bool isConvenienceFeesApplied;
+  final StylingDetails stylingDetails;
 
   const Instamojo(
       {Key key,
       @required this.isConvenienceFeesApplied,
       @required this.environment,
       @required this.apiCallType,
+      this.stylingDetails,
       @required this.listener})
       : super(key: key);
   @override
@@ -36,6 +39,7 @@ class _InstamojoState extends State<Instamojo> {
   @override
   void initState() {
     super.initState();
+    stylingDetails = widget.stylingDetails;
     BlocSupervisor.delegate = SimpleBlocDelegate();
     repository = InstamojoRepository(
         instamojoApiClient:
@@ -123,6 +127,55 @@ class ApiCallType {
       : createOrderBody = null,
         orderCreationUrl = null,
         callType = Type.START_PAYMENT;
+}
+
+class StylingDetails {
+  final ButtonStyle buttonStyle;
+  final ListItemStyle listItemStyle;
+  final InputFieldTextStyle inputFieldTextStyle;
+  final AlertStyle alertStyle;
+  final Color loaderColor;
+
+  StylingDetails(
+      {this.buttonStyle,
+      this.listItemStyle,
+      this.loaderColor,
+      this.alertStyle,
+      this.inputFieldTextStyle});
+}
+
+class InputFieldTextStyle {
+  final TextStyle labelTextStyle;
+  final TextStyle hintTextStyle;
+  final TextStyle textStyle;
+  InputFieldTextStyle(
+      {this.labelTextStyle, this.hintTextStyle, this.textStyle});
+}
+
+class ButtonStyle {
+  final TextStyle buttonTextStyle;
+  final Color buttonColor;
+  ButtonStyle({this.buttonTextStyle, this.buttonColor});
+}
+
+class ListItemStyle {
+  final TextStyle textStyle;
+  final TextStyle subTextStyle;
+  final Color borderColor;
+  ListItemStyle({this.textStyle, this.subTextStyle, this.borderColor});
+}
+
+class AlertStyle {
+  final TextStyle positiveButtonTextStyle;
+  final TextStyle negativeButtonTextStyle;
+  final TextStyle headingTextStyle;
+  final TextStyle messageTextStyle;
+
+  AlertStyle(
+      {this.positiveButtonTextStyle,
+      this.negativeButtonTextStyle,
+      this.headingTextStyle,
+      this.messageTextStyle});
 }
 
 enum Type { CREATE_ORDER, START_PAYMENT }

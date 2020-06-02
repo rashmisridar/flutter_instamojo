@@ -15,7 +15,7 @@ class CreateOrderBody extends Equatable {
   final String buyerName;
   final String buyerPhone;
   final String description;
-  String env;
+  final String env = "TEST";
 
   CreateOrderBody({
     @required this.amount,

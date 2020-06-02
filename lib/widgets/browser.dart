@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_instamojo/controllers/instamojo_controller.dart';
 
+import '../utils.dart';
 import 'loader.dart';
 
 class Browser extends StatefulWidget {
@@ -40,6 +41,7 @@ class _BrowserState extends State<Browser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: new AppBar(
           title: new Text("Payment"),
         ),
@@ -53,86 +55,100 @@ class _BrowserState extends State<Browser> {
                 Column(
                   children: <Widget>[
                     Expanded(
-                      child: InAppWebView(
-                          // initialUrl: widget.url,
-                          initialHeaders: {},
-                          initialOptions: InAppWebViewGroupOptions(
-                            crossPlatform: InAppWebViewOptions(
-                                debuggingEnabled: false,
-                                disableContextMenu: true,
-                                useShouldOverrideUrlLoading: false,
-                                javaScriptEnabled: true),
-                          ),
-                          onWebViewCreated:
-                              (InAppWebViewController controller) async {
-                            webView = controller;
-                            Future.delayed(Duration(milliseconds: 200), () {
-                              if (widget.postData != null) {
-                                controller.postUrl(
-                                    url: widget.url,
-                                    postData: Uint8List.fromList(
-                                        widget.postData.codeUnits));
-                              } else {
-                                controller.loadUrl(url: widget.url);
-                              }
-                            });
-                            print("onWebViewCreated");
-                          },
-                          onLoadStart:
-                              (InAppWebViewController controller, String url) {
-                            print("onLoadStart $url");
-                            setState(() {
-                              this.url = url;
-                            });
-                          },
-                          onLoadStop: (InAppWebViewController controller,
-                              String url) async {
-                            print("onLoadStop $url");
-                            setState(() {
-                              this.url = url;
-                            });
-                            if (url.contains("payment_id") &&
-                                url.contains("transaction_id")) {
-                              String value = url.split("?")[1];
-                              List<String> values = value.split("&");
-                              Map<String, String> map = new Map();
-                              for (int i = 0; i < values.length; i++) {
-                                map[values[i].split("=")[0]] =
-                                    values[i].split("=")[1];
-                              }
-                              if (map.containsKey("payment_status") &&
-                                  map["payment_status"].toLowerCase() ==
-                                      "failed") {
-                                map["statusCode"] = "201";
-                                map["response"] = "Payment Failed";
-                              } else {
-                                map["statusCode"] = "200";
-                                map["response"] = "Payment Successful";
-                              }
+                        child: InAppWebView(
+                      // initialUrl: widget.url,
+                      initialHeaders: {},
+                      initialOptions:
 
-                              print(map.toString());
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                              widget.listener.paymentStatus(status: map);
-                            }
-                          },
-                          onProgressChanged: (InAppWebViewController controller,
-                              int progress) {
-                            // if (webProgress < 90)
-                            setState(() {
-                              webProgress = progress;
-                              print(webProgress);
-                            });
-                          },
-                          onUpdateVisitedHistory:
-                              (InAppWebViewController controller, String url,
-                                  bool androidIsReload) {
-                            print("onUpdateVisitedHistory $url");
-                            setState(() {
-                              this.url = url;
-                            });
-                          }),
-                    ),
+//                      {
+//                        "mediaPlaybackRequiresUserGesture": false,
+//                        "allowsInlineMediaPlayback": true,
+//                        "useShouldOverrideUrlLoading": true,
+//                        "useOnLoadResource": true,
+//                        "transparentBackground": true,
+//                        "clearCache": true,
+//                        "userAgent": "mobile_app_flutter"
+//                      },
+
+                          InAppWebViewGroupOptions(
+                        crossPlatform: InAppWebViewOptions(
+                            debuggingEnabled: false,
+                            disableContextMenu: true,
+                            useShouldOverrideUrlLoading: false,
+                            javaScriptEnabled: true),
+                      ),
+                      onWebViewCreated:
+                          (InAppWebViewController controller) async {
+                        webView = controller;
+                        Future.delayed(Duration(milliseconds: 200), () {
+                          if (widget.postData != null) {
+//                            controller.postUrl(widget.url,
+//                                Uint8List.fromList(widget.postData.codeUnits));
+
+                            controller.postUrl(
+                                url: widget.url,
+                                postData: Uint8List.fromList(
+                                    widget.postData.codeUnits));
+                          } else {
+//                            controller.loadUrl(widget.url);
+                            controller.loadUrl(url: widget.url);
+                          }
+                        });
+                        print("onWebViewCreated");
+                      },
+                      onLoadStart:
+                          (InAppWebViewController controller, String url) {
+                        print("onLoadStart $url");
+                        setState(() {
+                          this.url = url;
+                        });
+                      },
+                      onLoadStop: (InAppWebViewController controller,
+                          String url) async {
+                        print("onLoadStop $url");
+                        setState(() {
+                          this.url = url;
+                        });
+                        if (url.contains("/integrations/android/redirect")) {
+                          String value = url.split("?")[1];
+                          List<String> values = value.split("&");
+                          Map<String, String> map = new Map();
+                          for (int i = 0; i < values.length; i++) {
+                            map[values[i].split("=")[0]] =
+                                values[i].split("=")[1];
+                          }
+                          if (map.containsKey("payment_status") &&
+                              map["payment_status"].toLowerCase() == "failed") {
+                            map["statusCode"] = "201";
+                            map["response"] = "Payment Failed";
+                          } else {
+                            map["statusCode"] = "200";
+                            map["response"] = "Payment Successful";
+                          }
+
+                          print(map.toString());
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          widget.listener.paymentStatus(status: map);
+                        }
+                      },
+                      onProgressChanged:
+                          (InAppWebViewController controller, int progress) {
+                        // if (webProgress < 90)
+                        setState(() {
+                          webProgress = progress;
+                          print(webProgress);
+                        });
+                      },
+//                          onUpdateVisitedHistory:
+//                              (InAppWebViewController controller, String url,
+//                                  bool androidIsReload) {
+//                            print("onUpdateVisitedHistory $url");
+//                            setState(() {
+//                              this.url = url;
+//                            });
+//                          }),
+                    )),
                   ],
                 ),
                 Visibility(
@@ -156,6 +172,7 @@ _showDialog(
       FlatButton(
           child: Text(
             "Yes",
+            style: stylingDetails.alertStyle.positiveButtonTextStyle,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -169,6 +186,7 @@ _showDialog(
       FlatButton(
           child: Text(
             "No",
+            style: stylingDetails.alertStyle.negativeButtonTextStyle,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -183,12 +201,14 @@ _showDialog(
       titleWidget() {
         return Text(
           "Alert",
+          style: stylingDetails.alertStyle.headingTextStyle,
         );
       }
 
       messageWidget() {
         return Text(
           "Are you sure you want to cancel this payment?",
+          style: stylingDetails.alertStyle.messageTextStyle,
         );
       }
 

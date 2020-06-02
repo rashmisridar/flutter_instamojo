@@ -9,6 +9,8 @@ import 'package:flutter_instamojo/controllers/instamojo_controller.dart';
 import 'package:flutter_instamojo/models/payment_option_model.dart';
 import 'package:flutter_instamojo/repositories/respositories.dart';
 
+import '../../utils.dart';
+
 class UpiLayout extends StatefulWidget {
   final String title;
   final UpiOptions upiOptions;
@@ -55,16 +57,21 @@ class _UpiLayoutState extends State<UpiLayout> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle hintStyle = stylingDetails.inputFieldTextStyle.hintTextStyle;
+    TextStyle labelStyle = stylingDetails.inputFieldTextStyle.labelTextStyle;
+    TextStyle textStyle = stylingDetails.inputFieldTextStyle.textStyle;
     preLayout = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         TextFormField(
+          style: textStyle,
           decoration: InputDecoration(
-            border: const UnderlineInputBorder(),
-            hintText: 'Enter your virtual payment address',
-            labelText: 'Enter your virtual payment address',
-          ),
+              border: const UnderlineInputBorder(),
+              hintText: 'Enter your virtual payment address',
+              labelText: 'Enter your virtual payment address',
+              hintStyle: hintStyle,
+              labelStyle: labelStyle),
           onSaved: (String value) {
             vpa = value;
           },
@@ -96,12 +103,16 @@ class _UpiLayoutState extends State<UpiLayout> {
         SizedBox(
           height: 10,
         ),
-        Text("Waiting..."),
+        Text(
+          "Waiting...",
+          style: stylingDetails.listItemStyle.textStyle,
+        ),
         SizedBox(
           height: 16,
         ),
         Text(
           "You will receive a notification on your Bank UPI app.\nPlease confirm it to complete the payment.",
+          style: stylingDetails.listItemStyle.textStyle,
           textAlign: TextAlign.center,
         )
       ],
@@ -177,10 +188,17 @@ class _UpiLayoutState extends State<UpiLayout> {
                                 apiCalling = false;
 
                                 Map<String, String> map = new Map();
-                                map["statusCode"] = "200";
-                                map["response"] = "Payment Successful";
-                                map["payment_id"] = paymentId;
-                                map["payment_status"] = "UPI";
+                                if (response['status_code'] == 6) {
+                                  map["statusCode"] = "201";
+                                  map["response"] = "Payment Failed";
+                                  map["payment_id"] = paymentId ?? "";
+                                  map["payment_status"] = "UPI";
+                                } else {
+                                  map["statusCode"] = "200";
+                                  map["response"] = "Payment Successful";
+                                  map["payment_id"] = paymentId ?? "";
+                                  map["payment_status"] = "UPI";
+                                }
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                                 widget.listener.paymentStatus(status: map);
@@ -214,15 +232,14 @@ class _UpiLayoutState extends State<UpiLayout> {
                     });
                   }
                 },
-          color: Colors.blueAccent,
-          splashColor: Colors.deepPurple,
+          color: stylingDetails.buttonStyle.buttonColor,
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
           ),
           textColor: Colors.white,
           child: Text(
             "Verify Payment".toUpperCase(),
-            style: const TextStyle(fontSize: 17.0),
+            style: stylingDetails.buttonStyle.buttonTextStyle,
           ),
         ));
   }

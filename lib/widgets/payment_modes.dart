@@ -9,6 +9,8 @@ import 'package:flutter_instamojo/widgets/trust_logo.dart';
 import 'package:flutter_instamojo/widgets/upi/upi_layout.dart';
 import 'package:flutter_instamojo/widgets/wallet/wallet.dart';
 
+import '../utils.dart';
+
 class PaymentModes extends StatelessWidget {
   final PaymentOptions paymentOptions;
   final Order order;
@@ -37,12 +39,15 @@ class PaymentModes extends StatelessWidget {
         child: Container(
           width: double.maxFinite,
           decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: Color(0XFFCCD1D9)))),
+              border: Border(
+                  bottom: BorderSide(
+                      color: stylingDetails.listItemStyle.borderColor ??
+                          Color(0XFFCCD1D9)))),
           margin: EdgeInsets.symmetric(horizontal: 16),
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Text(
             name,
-            style: TextStyle(color: Colors.black, fontSize: 18),
+            style: stylingDetails.listItemStyle.textStyle,
           ),
         ),
         onTap: () {
@@ -59,16 +64,22 @@ class PaymentModes extends StatelessWidget {
             builder: (ctx, setState) {
               return Container(
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(color: Color(0XFFCCD1D9)))),
+                    border: Border(
+                        bottom: BorderSide(
+                            color: stylingDetails.listItemStyle.borderColor ??
+                                Color(0XFFCCD1D9)))),
                 padding: EdgeInsets.all(16),
                 child: Column(
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text("Amount"),
-                        Text("₹ " + order.amount)
+                        Text("Amount",
+                            style: stylingDetails.listItemStyle.textStyle ??
+                                TextStyle(color: Colors.black, fontSize: 18)),
+                        Text("₹ " + order.amount,
+                            style: stylingDetails.listItemStyle.textStyle ??
+                                TextStyle(color: Colors.black, fontSize: 18))
                       ],
                     ),
                     SizedBox(
@@ -87,13 +98,17 @@ class PaymentModes extends StatelessWidget {
                               color: Colors.grey,
                             ),
                             Text("Convinience Fees",
-                                style: TextStyle(color: Colors.grey)),
+                                style:
+                                    stylingDetails.listItemStyle.subTextStyle ??
+                                        TextStyle(color: Colors.grey)),
                             Spacer(),
                             Text(
                                 "₹ " +
                                     order.totalOrderAmountDetails
                                         .totalConvinenceFees,
-                                style: TextStyle(color: Colors.grey))
+                                style:
+                                    stylingDetails.listItemStyle.subTextStyle ??
+                                        TextStyle(color: Colors.grey))
                           ],
                         ),
                         onTap: () {
@@ -115,16 +130,23 @@ class PaymentModes extends StatelessWidget {
                                       width: 20,
                                       child: Center(
                                           child: Text("|",
-                                              style: TextStyle(
-                                                  color: Colors.grey)))),
+                                              style: stylingDetails
+                                                      .listItemStyle
+                                                      .subTextStyle ??
+                                                  TextStyle(
+                                                      color: Colors.grey)))),
                                   Text("Fees",
-                                      style: TextStyle(color: Colors.grey)),
+                                      style: stylingDetails
+                                              .listItemStyle.subTextStyle ??
+                                          TextStyle(color: Colors.grey)),
                                   Spacer(),
                                   Text(
                                       "₹ " +
                                           order.totalOrderAmountDetails
                                               .convinenceFees,
-                                      style: TextStyle(color: Colors.grey))
+                                      style: stylingDetails
+                                              .listItemStyle.subTextStyle ??
+                                          TextStyle(color: Colors.grey))
                                 ],
                               ),
                               SizedBox(
@@ -138,16 +160,23 @@ class PaymentModes extends StatelessWidget {
                                       width: 20,
                                       child: Center(
                                           child: Text("|",
-                                              style: TextStyle(
-                                                  color: Colors.grey)))),
+                                              style: stylingDetails
+                                                      .listItemStyle
+                                                      .subTextStyle ??
+                                                  TextStyle(
+                                                      color: Colors.grey)))),
                                   Text(
                                       "GST @ ${double.parse(order.totalOrderAmountDetails.getGSTPercent).floor()}%",
-                                      style: TextStyle(color: Colors.grey)),
+                                      style: stylingDetails
+                                              .listItemStyle.subTextStyle ??
+                                          TextStyle(color: Colors.grey)),
                                   Spacer(),
                                   Text(
                                       "₹ " +
                                           order.totalOrderAmountDetails.gstFees,
-                                      style: TextStyle(color: Colors.grey))
+                                      style: stylingDetails
+                                              .listItemStyle.subTextStyle ??
+                                          TextStyle(color: Colors.grey))
                                 ],
                               ),
                             ],
@@ -162,13 +191,16 @@ class PaymentModes extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             "Total",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: stylingDetails.listItemStyle.subTextStyle ??
+                                TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
                               "₹ " +
                                   order.totalOrderAmountDetails
                                       .orderWithConvinenceFees,
-                              style: TextStyle(fontWeight: FontWeight.bold))
+                              style:
+                                  stylingDetails.listItemStyle.subTextStyle ??
+                                      TextStyle(fontWeight: FontWeight.bold))
                         ],
                       ),
                   ],
