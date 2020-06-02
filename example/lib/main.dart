@@ -98,7 +98,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       amount: _data.amount,
                       description: _data.description),
                   orderCreationUrl:
-                      "https://sample-sdk-server.instamojo.com", // The sample server of instamojo to create order id.
+                      "https://sample-sdk-server.instamojo.com/order", // The sample server of instamojo to create order id.
                 )));
 
     setState(() {

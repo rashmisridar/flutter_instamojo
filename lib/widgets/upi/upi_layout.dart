@@ -51,8 +51,19 @@ class _UpiLayoutState extends State<UpiLayout> {
 
   @override
   void dispose() {
-    if (_context != null) BlocProvider.of<InstamojoBloc>(_context).close();
+    try {
+      if (_context != null) BlocProvider.of<InstamojoBloc>(_context).close();
+    } catch (e) {}
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    try {
+      if (_context != null) BlocProvider.of<InstamojoBloc>(_context).close();
+    } catch (e) {}
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -82,7 +93,10 @@ class _UpiLayoutState extends State<UpiLayout> {
         SizedBox(
           height: 4,
         ),
-        Text("Example: mohit@icici"),
+        Text(
+          "Example: mohit@icici",
+          style: stylingDetails.inputFieldTextStyle.hintTextStyle,
+        ),
         SizedBox(
           height: 16,
         ),
@@ -207,6 +221,9 @@ class _UpiLayoutState extends State<UpiLayout> {
                               }
                             }
                           } else if (state is InstamojoError) {
+                            setState(() {
+                              apiCalling = false;
+                            });
                             _showInSnackBar("Something went wrong", null);
                           }
                         },
