@@ -1,48 +1,60 @@
-import 'dart:convert';
+// To parse this JSON data, do
+//
+//     final createOrderBody = createOrderBodyFromJson(jsonString);
 
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'dart:convert';
 
 CreateOrderBody createOrderBodyFromJson(String str) =>
     CreateOrderBody.fromJson(json.decode(str));
 
-String createOrderBodyToJson(CreateOrderBody data, String env) =>
-    json.encode(data.toJson(env));
+String createOrderBodyToJson(CreateOrderBody data) =>
+    json.encode(data);
 
 class CreateOrderBody extends Equatable {
-  final String amount;
-  final String buyerEmail;
-  final String buyerName;
-  final String buyerPhone;
-  final String description;
-  final String env = "TEST";
+  String purpose;
+  String amount;
+  String phone;
+  String buyerName;
+  String redirectUrl;
+  String webhook;
+  String email;
 
   CreateOrderBody({
+    @required this.purpose,
     @required this.amount,
-    @required this.buyerEmail,
+    @required this.phone,
     @required this.buyerName,
-    @required this.buyerPhone,
-    @required this.description,
+    @required this.redirectUrl,
+    @required this.webhook,
+    @required this.email,
+
   });
 
   factory CreateOrderBody.fromJson(Map<String, dynamic> json) =>
       CreateOrderBody(
+        purpose: json["purpose"] == null ? "" : json["purpose"],
         amount: json["amount"] == null ? null : json["amount"],
-        buyerEmail: json["buyer_email"] == null ? null : json["buyer_email"],
-        buyerName: json["buyer_name"] == null ? null : json["buyer_name"],
-        buyerPhone: json["buyer_phone"] == null ? null : json["buyer_phone"],
-        description: json["description"] == null ? "" : json["description"],
+        phone: json["phone"] == null ? null : json["phone"],
+        buyerName: json["buyerName"] == null ? null : json["buyerName"],
+        redirectUrl: json["redirectUrl"] == null ? null : json["redirectUrl"],
+        webhook: json["webhook"] == null ? null : json["webhook"],
+        email: json["email"] == null ? null : json["email"],
+
       );
 
   Map<String, String> toJson(String env) => {
-        "amount": amount == null ? null : amount,
-        "buyer_email": buyerEmail == null ? null : buyerEmail,
-        "buyer_name": buyerName == null ? null : buyerName,
-        "buyer_phone": buyerPhone == null ? null : buyerPhone,
-        "description": description == null ? null : description,
-        "env": env ?? "TEST"
-      };
+    "purpose": purpose == null ? null : purpose,
+    "amount": amount == null ? null : amount,
+    "phone": phone == null ? null : phone,
+    "buyerName": buyerName == null ? null : buyerName,
+    "redirectUrl": redirectUrl == null ? null : redirectUrl,
+    "webhook": webhook == null ? null : webhook,
+    "email": email == null ? null : email,
+
+  };
 
   @override
-  List<Object> get props => [amount, buyerEmail, buyerName, buyerPhone];
+  List<Object> get props => [purpose,amount,phone,buyerName,redirectUrl,webhook,email ];
 }

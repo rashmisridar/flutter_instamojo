@@ -12,23 +12,25 @@ class InstamojoApiClient {
   http.Client httpClient = http.Client();
   final Environment environment;
   final String _baseUrl;
+  var mRequestParam = new Map<String, dynamic>();
+
   InstamojoApiClient({this.environment = Environment.TEST})
       : _baseUrl = environment == Environment.PRODUCTION ? LIVE_URL : TEST_URL;
   Future<PaymentOptionModel> createOrder(CreateOrderBody body,
       {String orderCreationUrl}) async {
+    mRequestParam["purpose"] =body.purpose;
+    mRequestParam["amount"] =body.amount;
+    mRequestParam["phone"] =body.phone;
+    mRequestParam["buyer_name"] =body.buyerName;
+    mRequestParam["redirect_url"] =body.redirectUrl;
+    mRequestParam["webhook"] =body.webhook;
+    mRequestParam["email"] =body.email;
     final url = orderCreationUrl ?? DEFAULT_ORDER_CREATION_URL;
     final response = await this.httpClient.post(url,
-        body: createOrderBodyToJson(
-            body,
-            environment
-                .toString()
-                .substring(environment.toString().indexOf('.') + 1)),
-        headers: {"Content-Type": "application/json"});
-
+        body: mRequestParam);
     if (response.statusCode != 200) {
       throw new Exception('error creating order');
     }
-
     final json = jsonDecode(response.body);
     print(json);
     var model = CreatedOrderModel.fromJson(json);
@@ -36,8 +38,9 @@ class InstamojoApiClient {
   }
 
   Future<PaymentOptionModel> fetchOrder(String orderId) async {
+    print("orderId $orderId");
     final response =
-        await this.httpClient.get(getpaymentMethods(_baseUrl, orderId));
+    await this.httpClient.get(getpaymentMethods(_baseUrl, orderId));
 
     if (response.statusCode != 200) {
       throw new Exception('error creating order');
