@@ -1,8 +1,12 @@
 class DataModel {
-  String name = '';
-  String email = '';
-  String number = '';
+
+  String purpose = '';
   String amount = '';
-  String description = '';
+  String phone = '';
+  String buyer_name = '';
+  String redirect_url = '';
+  String webhook ='';
+  String email ='';
   bool isLive = false;
+
 }

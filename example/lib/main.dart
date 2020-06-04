@@ -92,11 +92,13 @@ class _PaymentScreenState extends State<PaymentScreen>
             builder: (ctx) => InstamojoScreen(
                   isLive: _data.isLive,
                   body: CreateOrderBody(
-                      buyerName: _data.name,
-                      buyerEmail: _data.email,
-                      buyerPhone: _data.number,
-                      amount: _data.amount,
-                      description: _data.description),
+                    purpose: _data.purpose,
+                    amount: _data.amount,
+                    phone: _data.phone,
+                    buyerName: _data.buyer_name,
+                    redirectUrl: _data.redirect_url,
+                    webhook: _data.webhook,
+                    email: _data.email,),
                   orderCreationUrl:
                       "https://sample-sdk-server.instamojo.com/order", // The sample server of instamojo to create order id.
                 )));
@@ -139,7 +141,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                 }
                               },
                               onSaved: (val) =>
-                                  setState(() => _data.name = val),
+                                  setState(() => _data.buyer_name = val),
                             ),
                             TextFormField(
                                 initialValue: "test@test.com",
@@ -165,7 +167,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                   }
                                 },
                                 onSaved: (val) =>
-                                    setState(() => _data.number = val)),
+                                    setState(() => _data.phone = val)),
                             TextFormField(
                                 initialValue: "33",
                                 keyboardType: TextInputType.number,
@@ -186,7 +188,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                 decoration:
                                     InputDecoration(labelText: 'Description'),
                                 onSaved: (val) =>
-                                    setState(() => _data.description = val)),
+                                    setState(() => _data.purpose = val)),
                             SwitchListTile(
                                 title: Text(_data.isLive
                                     ? 'Live Account'
