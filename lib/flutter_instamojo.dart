@@ -161,8 +161,9 @@ class ButtonStyle {
 class ListItemStyle {
   final TextStyle textStyle;
   final TextStyle subTextStyle;
+  final TextStyle labelTextStyle;
   final Color borderColor;
-  ListItemStyle({this.textStyle, this.subTextStyle, this.borderColor});
+  ListItemStyle({this.textStyle, this.subTextStyle,this.labelTextStyle, this.borderColor});
 }
 
 class AlertStyle {
