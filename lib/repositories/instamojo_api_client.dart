@@ -38,7 +38,7 @@ class InstamojoApiClient {
   }
 
   Future<PaymentOptionModel> fetchOrder(String orderId) async {
-    print("orderId $orderId");
+    print("orderId $orderId ${getpaymentMethods(_baseUrl, orderId)}");
     final response =
     await this.httpClient.get(getpaymentMethods(_baseUrl, orderId));
 

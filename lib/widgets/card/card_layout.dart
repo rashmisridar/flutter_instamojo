@@ -62,6 +62,7 @@ class _CardLayoutState extends State<CardLayout> {
   Widget build(BuildContext context) {
     TextStyle hintStyle = stylingDetails.inputFieldTextStyle.hintTextStyle;
     TextStyle labelStyle = stylingDetails.inputFieldTextStyle.labelTextStyle;
+    TextStyle textStyle = stylingDetails.inputFieldTextStyle.labelTextStyle;
     return new Scaffold(
         key: _scaffoldKey,
         appBar: new AppBar(
@@ -78,6 +79,7 @@ class _CardLayoutState extends State<CardLayout> {
                     height: 10.0,
                   ),
                   TextFormField(
+                    style: textStyle,
                     decoration: InputDecoration(
                         border: UnderlineInputBorder(),
                         suffixIcon: const Icon(
@@ -87,6 +89,7 @@ class _CardLayoutState extends State<CardLayout> {
                         hintText: 'What name is written on card?',
                         labelText: 'Name on card',
                         hintStyle: hintStyle,
+
                         labelStyle: labelStyle),
                     onSaved: (String value) {
                       _paymentCard.name = value;
@@ -100,6 +103,8 @@ class _CardLayoutState extends State<CardLayout> {
                     height: 10.0,
                   ),
                   new TextFormField(
+                    style: textStyle,
+
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       WhitelistingTextInputFormatter.digitsOnly,
@@ -129,6 +134,8 @@ class _CardLayoutState extends State<CardLayout> {
                     Flexible(
                       flex: 1,
                       child: TextFormField(
+                        style: textStyle,
+
                         inputFormatters: [
                           WhitelistingTextInputFormatter.digitsOnly,
                           new LengthLimitingTextInputFormatter(4),
@@ -152,6 +159,7 @@ class _CardLayoutState extends State<CardLayout> {
                     ),
                     Flexible(
                         child: TextFormField(
+                          style: textStyle,
                       inputFormatters: [
                         WhitelistingTextInputFormatter.digitsOnly,
                         new LengthLimitingTextInputFormatter(4),

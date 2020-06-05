@@ -59,7 +59,6 @@ class _BrowserState extends State<Browser> {
                       // initialUrl: widget.url,
                       initialHeaders: {},
                       initialOptions:
-
 //                      {
 //                        "mediaPlaybackRequiresUserGesture": false,
 //                        "allowsInlineMediaPlayback": true,

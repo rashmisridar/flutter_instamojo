@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_instamojo/controllers/instamojo_controller.dart';
 import 'package:flutter_instamojo/flutter_instamojo.dart';
 import 'package:flutter_instamojo/models/create_order_body.dart';
-
 import 'model/data_model.dart';
 
 void main() {
@@ -34,6 +33,7 @@ class _MyAppState extends State<MyApp> {
         routes: {},
         title: 'Styli',
         debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.dark,
         theme: ThemeData(
             appBarTheme: AppBarTheme(brightness: Brightness.dark),
             primarySwatch: Colors.amber,
@@ -306,32 +306,36 @@ class _InstamojoScreenState extends State<InstamojoScreen>
               orderCreationUrl: widget.orderCreationUrl),
           stylingDetails: StylingDetails(
               buttonStyle: ButtonStyle(
-                  buttonColor: Colors.amber,
+                  buttonColor: Colors.blue,
                   buttonTextStyle: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                   )),
               listItemStyle: ListItemStyle(
                   borderColor: Colors.grey,
-                  textStyle: TextStyle(color: Colors.black, fontSize: 18),
+                  labelTextStyle:TextStyle(color: Colors.white, fontSize: 18) ,
+                  textStyle: TextStyle(color: Colors.white, fontSize: 18),
                   subTextStyle: TextStyle(color: Colors.grey, fontSize: 14)),
-              loaderColor: Colors.amber,
+              loaderColor:Colors.blue,
               inputFieldTextStyle: InputFieldTextStyle(
                   textStyle: TextStyle(color: Colors.black, fontSize: 18),
                   hintTextStyle: TextStyle(color: Colors.grey, fontSize: 14),
-                  labelTextStyle: TextStyle(color: Colors.grey, fontSize: 14)),
+                  labelTextStyle: TextStyle(color: Colors.white, fontSize: 14,
+                  )),
               alertStyle: AlertStyle(
+
                 headingTextStyle: TextStyle(color: Colors.black, fontSize: 14),
                 messageTextStyle: TextStyle(color: Colors.black, fontSize: 12),
                 positiveButtonTextStyle:
-                    TextStyle(color: Colors.redAccent, fontSize: 10),
+                TextStyle(color: Colors.redAccent, fontSize: 10),
                 negativeButtonTextStyle:
-                    TextStyle(color: Colors.amber, fontSize: 10),
+                TextStyle(color: Colors.amber, fontSize: 10),
               )),
         )));
   }
 
   @override
   void paymentStatus({Map<String, String> status}) {
+    print("status rashmi ${status}");
     Navigator.pop(context, status);
   }
 }
